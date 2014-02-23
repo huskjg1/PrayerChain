@@ -2,44 +2,34 @@ require 'spec_helper'
 
 describe "StaticPages" do
   let(:title) {"PrayerChain"}
+  subject {page}
+
   describe "home" do
-    it "should have a header of Home" do
-      visit '/static_pages/home'
-      expect(page).to have_content('Home')
-    end
+    before { visit root_path }
 
-    it "should have the base title" do
-      visit '/static_pages/home'
-      expect(page).to have_title(title)
-    end
-
-    it "should not have a title of Home" do
-      visit '/static_pages/home'
-      expect(page).not_to have_title('| Home')
-    end
+    it { should have_content('Home') }
+    it { should have_title(title) }
+    it { should_not have_title('| Home') }
   end
 
   describe "help" do
-    it "should have a header of Help" do
-      visit '/static_pages/help'
-      expect(page).to have_content('Help')
-    end
+    before { visit help_path }
 
-    it "should have the right title" do
-      visit '/static_pages/help'
-      expect(page).to have_title(title + " | Help")
-    end
+    it { should have_content('Help') }
+    it { should have_title(title + " | Help") }
   end
 
   describe "about" do
-    it "should have a header of About" do
-      visit '/static_pages/about'
-      expect(page).to have_content('About')
-    end
+    before { visit about_path }
 
-    it "should have the right title" do
-      visit '/static_pages/about'
-      expect(page).to have_title(title + " | About")
-    end
+    it { should have_content('About') }
+    it { should have_title(title + " | About") }
+  end
+
+  describe "contact" do
+    before { visit contact_path }
+
+    it { should have_content('Contact') }
+    it { should have_title(title + " | Contact") }
   end
 end
