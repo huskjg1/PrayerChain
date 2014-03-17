@@ -6,7 +6,12 @@ describe "AuthenticationPages" do
   describe "signin page" do
     before { visit signin_path }
 
-    it { should have_content('Sign in') }
+    describe "before signing in" do
+      it { should have_content('Sign in') }
+      it { should_not have_link('Users', href: users_path) }
+      it { should_not have_content('Profile') }
+      it { should_not have_content('Settings') }
+    end
 
     describe "with invalid information" do
       before { click_button "Sign in" }
