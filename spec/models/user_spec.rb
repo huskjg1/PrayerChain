@@ -127,5 +127,14 @@ describe User do
     it "should have the right prayer_requests in order" do
       expect(@user.prayer_requests.to_a).to eq [newer_prayer_request, older_prayer_request]
     end
+
+    it "should destroy associated prayer_requests" do
+      prayer_requests = @user.prayer_requests.to_a
+      @user.destroy
+      expect(prayer_requests).not_to be_empty
+      prayer_requests.each do |prayer_request|
+        expect(PrayerRequest.where(id: prayer_request.id)).to be_empty
+      end
+    end
   end
 end
