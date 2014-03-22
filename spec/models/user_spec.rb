@@ -114,4 +114,18 @@ describe User do
     before { @user.save }
     its(:remember_token) { should_not be_blank }
   end
+
+  describe "prayer_request associations" do
+    before { @user.save }
+    let!(:older_prayer_request) do
+      FactoryGirl.create(:prayer_request, user: @user, created_at: 1.day.ago)
+    end
+    let!(:newer_prayer_request) do
+      FactoryGirl.create(:prayer_request, user: @user, created_at: 1.hour.ago)
+    end
+
+    it "should have the right prayer_requests in order" do
+      expect(@user.prayer_requests.to_a).to eq [newer_prayer_request, older_prayer_request]
+    end
+  end
 end
