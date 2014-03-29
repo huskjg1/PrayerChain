@@ -52,10 +52,19 @@ describe "User pages" do
 
   describe "profile page" do
     let(:user) { FactoryGirl.create(:user) }
+    let!(:pr1) { FactoryGirl.create(:prayer_request, user: user, content: "Foo") }
+    let!(:pr2) { FactoryGirl.create(:prayer_request, user: user, content: "Bar") }
+
     before { visit user_path(user) }
 
     it { should have_content(user.name) }
     it { should have_title(user.name) }
+
+    describe "prayer_requests" do
+      it { should have_content(pr1.content) }
+      it { should have_content(pr2.content) }
+      it { should have_content(user.prayer_requests.count) }
+    end
   end
 
   describe "signup page" do

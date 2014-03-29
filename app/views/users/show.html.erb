@@ -8,4 +8,13 @@
       </h1>
     </section>
   </aside>
+  <div class="span8">
+    <% if @user.prayer_requests.any? %>
+      <h3>Prayer Requests (<%= @user.prayer_requests.count %>)</h3>
+      <ol class="prayer_requests">
+        <%= render @prayer_requests %>
+      </ol>
+      <%= will_paginate @prayer_requests %>
+    <% end %>
+  </div>
 </div>
