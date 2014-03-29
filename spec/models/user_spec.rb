@@ -17,6 +17,7 @@ describe User do
   it { should respond_to(:authenticate) }
   it { should respond_to(:admin) }
   it { should respond_to(:prayer_requests) }
+  it { should respond_to(:feed) }
 
   it { should be_valid }
   it { should_not be_admin }
@@ -135,6 +136,16 @@ describe User do
       prayer_requests.each do |prayer_request|
         expect(PrayerRequest.where(id: prayer_request.id)).to be_empty
       end
+    end
+
+    describe "status" do
+      let(:unfollowed_post) do
+        FactoryGirl.create(:prayer_request, user: FactoryGirl.create(:user))
+      end
+
+      its(:feed) { should include(newer_prayer_request) }
+      its(:feed) { should include(older_prayer_request) }
+      its(:feed) { should_not include(unfollowed_post) }
     end
   end
 end

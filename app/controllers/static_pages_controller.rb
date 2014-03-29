@@ -1,6 +1,9 @@
 class StaticPagesController < ApplicationController
   def home
-    @prayer_request = current_user.prayer_requests.build if signed_in?
+    if signed_in?
+      @prayer_request  = current_user.prayer_requests.build
+      @feed_items = current_user.feed.paginate(page: params[:page])
+    end
   end
 
   def help

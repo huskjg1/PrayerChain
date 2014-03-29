@@ -7,6 +7,7 @@ class PrayerRequestsController < ApplicationController
       flash[:success] = "Prayer Request made!"
       redirect_to root_url
     else
+      @feed_items = []
       render 'static_pages/home'
     end
   end
