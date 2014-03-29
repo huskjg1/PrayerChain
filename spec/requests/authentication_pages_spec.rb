@@ -95,6 +95,19 @@ describe "AuthenticationPages" do
           it { should have_title('Sign in') }
         end
       end
+
+      describe "in the PrayerRequests controller" do
+
+        describe "submitting to the create action" do
+          before { post prayer_requests_path }
+          specify { expect(response).to redirect_to(signin_path) }
+        end
+
+        describe "submitting to the destroy action" do
+          before { delete prayer_request_path(FactoryGirl.create(:prayer_request)) }
+          specify { expect(response).to redirect_to(signin_path) }
+        end
+      end
     end
 
     describe "as non-admin user" do
