@@ -3,4 +3,9 @@
   <span class="timestamp">
     Posted <%= time_ago_in_words(prayer_request.created_at) %> ago.
   </span>
+  <% if current_user?(prayer_request.user) %>
+    <%= link_to "delete", prayer_request, method: :delete,
+                                     data: { confirm: "Are you sure?" },
+                                     title: prayer_request.content %>
+  <% end %>
 </li>

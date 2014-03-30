@@ -30,4 +30,16 @@ describe "Prayer Request pages" do
       end
     end
   end
+
+  describe "prayer request destruction" do
+    before { FactoryGirl.create(:prayer_request, user: user) }
+
+    describe "as correct user" do
+      before { visit root_path }
+
+      it "should delete a prayer request" do
+        expect { click_link "delete" }.to change(PrayerRequest, :count).by(-1)
+      end
+    end
+  end
 end
