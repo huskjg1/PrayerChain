@@ -146,10 +146,21 @@ describe User do
       let(:unfollowed_post) do
         FactoryGirl.create(:prayer_request, user: FactoryGirl.create(:user))
       end
+      let(:followed_user) { FactoryGirl.create(:user) }
+
+      before do
+        @user.follow!(followed_user)
+        3.times { followed_user.prayer_requests.create!(content: "Lorem ipsum") }
+      end
 
       its(:feed) { should include(newer_prayer_request) }
       its(:feed) { should include(older_prayer_request) }
       its(:feed) { should_not include(unfollowed_post) }
+      its(:feed) do
+        followed_user.prayer_requests.each do |prayer_request|
+          should include(prayer_request)
+        end
+      end
     end
   end
 
